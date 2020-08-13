@@ -1,0 +1,16 @@
+@import 'Fonts';
+
+.button-basic {
+    @extend .text-standard;
+
+    border: none;
+    background-color: white;    
+    cursor: pointer;
+}
+
+.button-round {
+    @extend .button-basic;
+
+    border: 1px solid;
+    border-radius: 100%;
+}

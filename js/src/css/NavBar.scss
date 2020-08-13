@@ -1,0 +1,46 @@
+@import 'Button';
+
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .logo-container {
+    margin-left: 4%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+  }
+
+  .nav-panel {
+    display: flex;
+    align-items: center;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    margin-left: 12%;
+  }
+
+  .account-container {
+    display: flex;
+    align-items: center;
+    margin-right: 10%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+  }
+
+  .home-container {
+    margin-right: 15%;
+  }
+  
+  .projects-container {
+    margin-right: 15%;
+  }
+
+  .account-info-container {
+    margin-left: 20%;
+  }
+
+  .account-access-container {
+    display: flex;
+    margin-right: 6%;
+  }  
+}

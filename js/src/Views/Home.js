@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './../css/Home.scss';
 
 class Home extends Component {
     constructor(props) {
@@ -8,9 +9,9 @@ class Home extends Component {
         }
     }
 
-    rrender() {
+    render() {
         return (
-            <div>
+            <div className={'home-container'}>
                 Home!
             </div>
         )
