@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <div className="App">
         <NavBar 
-          userName={'Ankit'}
+          userName={'Guest'}
         />
         <Switch>
           <Route exact path="/Home" component={Home}/>       

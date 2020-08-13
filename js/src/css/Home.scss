@@ -1,5 +1,21 @@
-
+$backgrouondColor: #F2ECEC;
 
 .home-container {
-    background-color: blue($color: #000000);
+    display: flex;
+    flex-direction: column;
+
+    .home-intro-container {
+        display: flex;
+        flex-direction: row;
+        background-color: $backgrouondColor;
+        margin-top: 5%;
+        margin-left: 1%;
+        margin-right: 1%;
+        border-radius: 10px;
+    }
+
+    .home-intro-description {
+        display: flex;
+        flex-direction: column;
+    }
 }

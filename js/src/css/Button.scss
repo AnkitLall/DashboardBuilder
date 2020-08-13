@@ -1,16 +1,75 @@
 @import 'Fonts';
 
+$backgroundBlue: #5757a0; 
+$backgroundGreen: #72d072; 
+$backgroundMaroon: maroon;
+$textColorWhite: white;
+
 .button-basic {
-    @extend .text-standard;
+    @extend .font-standard;
 
     border: none;
     background-color: white;    
     cursor: pointer;
 }
 
-.button-round {
+.button-standard {
     @extend .button-basic;
+}
+
+.button-standard:focus {
+    @extend .font-bold;
+    
+    text-decoration: underline;
+    outline: none;
+}
+
+.button-standard:hover {
+    @extend .font-bold;
+
+    text-decoration: underline;
+    outline: none;
+}
+
+.button-round {
+    border-radius: 100%;
+}
+
+.button-round:hover {
+    box-shadow: 2.5px 2.5px 5px grey;
+    outline: none;
+}
+
+.button-round-user {
+    @extend .button-basic;
+    @extend .button-round;
+    
+    background-color: $backgroundGreen; 
+    color: $textColorWhite;
+}
+
+.button-round-guest {
+    @extend .button-basic;
+    @extend .button-round;
 
     border: 1px solid;
-    border-radius: 100%;
+}
+
+.button-colored {
+    @extend .button-basic;
+
+    border-radius: 5px;
+    background-color: $backgroundBlue;
+    color: $textColorWhite;
+}
+
+.button-colored:hover {
+    background-color: #272771;
+    box-shadow: 2.5px 2.5px 5px grey;
+    outline: none;
+}
+
+.button-colored:focus {
+    background-color: #272771;
+    outline: none;
 }

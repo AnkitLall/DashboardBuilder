@@ -2,10 +2,16 @@
 
 $standardColor: black;
 
-.text-standard {
+.font-standard {
     font: {
         family: Roboto;
         size: 20px;        
     };
     color: $standardColor;
+}
+
+.font-bold {
+    @extend .font-standard;
+    
+    font-weight: bold;
 }
