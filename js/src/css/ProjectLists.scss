@@ -1,0 +1,52 @@
+$iconBackground: #343A3F;
+
+
+.list-container {
+    width: 80%;
+
+    .search-panel {
+        height: 90px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .search-bar-container {
+            width: 30%;
+        }
+    }
+
+    .action-panel {
+        display: flex;
+        height: 45px;
+        width: 100%;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+
+        .action-buttons {
+            margin-right: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            width: 10%;
+
+            .project-action-icons {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .list-panel {
+        height: calc(100% - 135px);
+        display: flex;
+        justify-content: center;
+
+        .table-container {
+            width: 80%;
+            height: 80%;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+    }
+}

@@ -3,20 +3,28 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import Home  from './Views/Home';
 import Projects from './Views/Projects';
 import About from './Views/About';
-import NavBar from './Components/NavBar/NavBar';
-import './App.css';
+import NavBar from './Components/NavBar';
+import Login from './Views/Login';
+import Register from './Views/Register';
+import axios from 'axios';
+import {
+  defaultBase
+} from './Config/UrlList';
+import './css/App.scss';
+
+axios.defaults.baseURL = defaultBase;
 
 class App extends Component {
   render() {
-    return (
+    return (    
       <div className="App">
-        <NavBar 
-          userName={'Guest'}
-        />
+        <NavBar />
         <Switch>
           <Route exact path="/Home" component={Home}/>       
           <Route exact path="/Projects" component={Projects} />
           <Route exact path="/About" component={About} />
+          <Route exact path="/Login" component={Login} />
+          <Route exact path="/Register" component={Register} />
           <Route exact path='/'>
             <Redirect to="/Home" />
           </Route>
@@ -25,10 +33,5 @@ class App extends Component {
     );
   }
 }
-
-// function Home() {
-//   return <h2>Home</h2>;
-// }
-
 
 export default App;
