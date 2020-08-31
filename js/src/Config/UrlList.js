@@ -1,0 +1,1 @@
+export const defaultBase = 'http://localhost:3000';

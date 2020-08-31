@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import ProjectsSideBar from './../Components/ProjectsSideBar';
+import ProjectLists from '../Components/ProjectList';
+
 class Projects extends Component {
     constructor(props) {
         super(props);
@@ -10,8 +13,9 @@ class Projects extends Component {
 
     render() {
         return (
-            <div>
-                Projects!!
+            <div className={'projects-container'}>
+                <ProjectsSideBar />
+                <ProjectLists />
             </div>
         )
     }
