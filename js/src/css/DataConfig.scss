@@ -1,0 +1,98 @@
+
+.select-text {
+    width: 40%;
+    text-align: left;
+}
+
+.select-container {
+    width: 60%;
+    text-align: left;
+}
+
+.data-config-container {
+    height: 100%;
+
+    .action-buttons-container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        .action-buttons {
+            
+            .action-button {
+                margin-right: 30px;
+                margin-top: 15px;
+                margin-bottom: 15px;
+            }
+        }
+    }                    
+
+    .data-config-panel {
+        height: calc(100% - 30px);     
+        display: flex;
+        justify-content: center;   
+
+        .panel {
+            height: 100%;
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+            overflow: auto;
+
+            .select-data-source {
+                display: flex;
+                margin-right: 100px;
+                margin-top: 30px;
+            }
+    
+            .data-source-container {
+                display: flex;
+                margin-top: 20px;
+                margin-right: 100px;
+
+                .file-upload-section {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+    
+                    .select-file-type {
+                        display: flex;
+                        width: 100%;
+                    }
+    
+                    .file-upload {
+                        width: 100%;
+    
+                        .file-upload-view {
+                            width: 100%;
+                            display: flex;
+                            margin-top: 20px;
+                                                        
+                            .file-upload-text {
+                                width: 40%;
+                                text-align: left;
+                            }
+        
+                            .file-upload-section {
+                                width: 60%;
+                                display: flex;
+                                justify-content: flex-start;
+                                flex-direction: row;
+
+                                .file-upload-panel {
+                                    width: 70%;
+                                    display: flex;
+                                    justify-content: flex-start;
+
+                                    .file {
+                                        width: 70%;
+                                    }
+                                }
+                            }
+                        }
+                    }                                
+                }                            
+            } 
+        }
+    }
+} 

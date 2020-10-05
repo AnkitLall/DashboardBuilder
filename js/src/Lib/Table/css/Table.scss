@@ -1,5 +1,16 @@
 $lightBlue:#B8DDFF;
 
+
+// ::-webkit-scrollbar {
+//     display: none;
+// }
+   
+/* Handle */
+// ::-webkit-scrollbar-thumb {
+//     background: black; 
+//     border-radius: 10px;
+// }
+
 .lib-table-container {
     width: 100%;
     height: 100%;
@@ -7,31 +18,53 @@ $lightBlue:#B8DDFF;
     .table {
         width: 100%;
         border-collapse: collapse;
+        height: 100%;
 
         .default-row {
             background-color: white;
-        }
-
-        .clickable-row {
-            @extend .default-row;
-
             cursor: pointer;                
-        }
-
-        .clickable-row:hover {
-            background-color: $lightBlue;
-        }
-
-        .table-body {
+            display: table;
+            table-layout: fixed;
             width: 100%;
-        }
-    }
+        }        
 
-    .no-rows-container {
-        width: 100%;
-        height: 25%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        .default-row:hover {
+            background-color: whitesmoke;
+        }
+
+        thead {
+            display: table;
+
+            .header-row {
+                display: table;
+                width: 100%;
+                table-layout: fixed;
+            }
+        }
+
+        .scroll-active {
+            border-top: 1px solid;
+            border-bottom: 1px solid;
+        }
+
+        .scroll-inactive {
+            border: none;
+        }
+
+        tbody {
+            display: block;
+            width: 100%;
+            height: 90%;
+            overflow: auto;
+            border-bottom: 1px solid black;
+
+            .no-rows-container {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
     }
 }

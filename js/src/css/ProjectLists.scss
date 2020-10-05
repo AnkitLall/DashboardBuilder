@@ -1,49 +1,61 @@
 $iconBackground: #343A3F;
-
+$disabledColor: #b9b9b9;
 
 .list-container {
     width: 80%;
 
     .search-panel {
-        height: 90px;
+        height: 55px;
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: flex-end;
 
         .search-bar-container {
             width: 30%;
         }
     }
 
-    .action-panel {
+    .action-container {
         display: flex;
         height: 45px;
         width: 100%;
         flex-direction: row;
-        justify-content: flex-end;
+        justify-content: center;
         align-items: center;
 
-        .action-buttons {
-            margin-right: 35px;
+        .action-panel {
+            width: 80%;
+            height: 100%;
             display: flex;
             align-items: center;
-            justify-content: space-around;
-            width: 10%;
+            justify-content: flex-end;
 
-            .project-action-icons {
-                cursor: pointer;
+            .action-buttons {
+                margin-right: 35px;
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                width: 10%;
+    
+                .project-action-icons {
+                    cursor: pointer;
+                }
+
+                .project-action-icons-disabled {
+                    color: $disabledColor;
+                }
             }
-        }
+        }        
     }
 
     .list-panel {
-        height: calc(100% - 135px);
+        height: calc(100% - 100px);
         display: flex;
         justify-content: center;
 
         .table-container {
             width: 80%;
-            height: 80%;
+            height: 90%;
             display: flex;
             justify-content: center;
             flex-direction: column;

@@ -18,4 +18,78 @@ $backgrouondColor: #F2ECEC;
         display: flex;
         flex-direction: column;
     }
+
+    .template-display-container {
+
+        .slider-block {
+            margin-top: 100px;
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            border: 1px solid #898888;
+            border-radius: 10px;
+            margin-left: 350px;
+            margin-right: 350px;
+            box-shadow: 0px 0px 18px #888888;
+
+            .q-block {
+                height: 80%;
+                /* width: 70%; */
+
+                .q-text {
+                    height: 40%;
+                    display: flex;
+                    align-items: center;
+                    margin-left: 30px;
+                }
+
+                .opt-block {
+                    // height: 60%;
+                    display: flex;
+                    justify-content: space-around;
+                    // align-items: center;
+                    flex-direction: column;
+                    margin-left: 75px;
+                    margin-right: 75px;
+
+                    .opt {
+                        height: 60px;
+                        width: 80px;
+                        border: 1px solid;
+                        border-radius: 5px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        cursor: pointer;
+                    }
+
+                    .opt-selected {
+                        @extend .opt;
+
+                        background-color: #19A0FA;
+                        color: white;
+                    }
+
+                    .opt:hover {
+                        background-color: #19A0FA;
+                        color: white;
+                    }
+                }
+            }
+
+            .action {
+                height: 20%;
+                display: flex;
+                justify-content: flex-end;
+                margin-bottom: 15px;
+                margin-right: 25px;
+
+                .action-button {
+                    width: 100px;
+                    height: 100%;
+                }
+            }
+        }
+    }
 }

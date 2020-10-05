@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+
+import Slider from './Slider/Slider';
 import './../css/Home.scss';
 
 class Home extends Component {
@@ -29,7 +31,7 @@ class Home extends Component {
                     </div>                    
                 </div>
                 <div className={'template-display-container'}>
-
+                    <Slider />
                 </div>
             </div>
         )

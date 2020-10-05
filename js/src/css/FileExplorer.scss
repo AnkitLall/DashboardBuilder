@@ -1,0 +1,107 @@
+
+$borderColor: #E7EEEC;
+$sectionSelectedColor: #19A0FB;
+$fileSlectionColor: #B8DDFF;
+$disabledColor: #b9b9b9;
+
+.file-explorer-container {
+    width: 20%;
+    border-right: 1px solid black;//$borderColor;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .view-selector-section {
+        display: flex;
+        height: 70px;
+        border-bottom: 1px solid $borderColor;
+        align-items: flex-end;
+
+        .view-selectors {
+            margin-right: 5px;
+            margin-left: 15px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            cursor: pointer;
+        }
+
+        .view-selectors-selected {
+            @extend .view-selectors;
+
+            border-bottom: 3px solid $sectionSelectedColor;
+        }
+    }  
+    
+    .search-bar-section {
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;  
+        
+        .search-bar {
+            width: 95%;
+        }
+    }
+
+    .actions-section {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        background: whitesmoke;
+        height: 20px; 
+
+        .file-action {
+            cursor: pointer;
+        }
+
+        .file-action-disabled {
+            color: $disabledColor;
+        }
+    }
+
+    .explorer-section {
+        height: calc(100% - 150px);
+
+        .files-dashboard {
+            height: 100%;
+
+            .files-list-container {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+    
+                .no-files {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100%;
+                }
+                
+                .file-container {
+                    height: 40px;
+
+                    .file {
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        cursor: pointer;
+        
+                        .file-text {
+                            margin-left: 25px;
+                        }
+                    }
+        
+                    .file-selected {
+                        @extend .file;
+            
+                        background-color: $fileSlectionColor;
+                    }
+        
+                    .file:hover {
+                        background-color: $fileSlectionColor;
+                    }
+                }                
+            }
+        }
+    }
+}

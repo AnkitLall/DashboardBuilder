@@ -1,0 +1,105 @@
+$borderColor: #E7EEEC;
+$disabledColor: #d5d5d8;
+
+.chart-config-container {
+    height: 100%;
+
+    .action-buttons-container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        .action-buttons {
+            
+            .action-button {
+                margin-right: 30px;
+                margin-top: 15px;
+                margin-bottom: 15px;
+            }
+        }
+    } 
+
+    .chart-container {
+        height: calc(100% - 51px);
+        display: flex;
+        justify-content: center;
+
+        .chart-config {
+            width: 80%;
+            height: 90%;
+
+            .config-buttons-container {
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+
+                .config-buttons {
+
+                    .config-button {
+                        margin-right: 10px;
+                    }
+                }
+            }
+            
+            .chart-nav {
+                display: flex;
+                justify-content: center;
+                height: 40px;
+                align-items: center;
+
+                .nav-icons {
+                    cursor: pointer;                    
+                }
+
+                .nav-icons-disabled {
+                    color: $disabledColor;                    
+                }
+
+                .chart-num-block {
+                    width: 30px;
+                    height: 20px;
+                }
+            }
+
+            .chart-config-block {
+                padding: 10px;
+                display: flex;
+                height: calc(100% - 61px);
+                width: 100%;
+                border-bottom: 1px solid $borderColor;
+                flex-direction: column;
+                overflow: auto;
+
+                .chart-options {
+                    display: flex;
+                    flex-direction: column;
+
+                    .chart-type {
+                        display: flex;
+
+                        .chart-text {
+                            width: 20%;
+                        }
+
+                        .chart-type-select {
+                            width: 40%;
+                        }
+                    }
+
+                    .chart-name {
+                        display: flex;
+                        margin-top: 20px;
+
+                        .chart-text {
+                            width: 20%;
+                        }
+
+                        .chart-name-textbox {
+                            width: 40%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}   

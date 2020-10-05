@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import {
     setUser,
 } from './../Slices/AuthSlice';
 import {
-    validator
+    userInfoValidator
 } from './../Utils/FormValidators';
 import {
     login,
     register
 } from './../Utils/ApiService';
-import history from './../Utils/History';
 import './../css/Form.scss';
 
 function Form(props) {
@@ -22,6 +22,7 @@ function Form(props) {
     let [errorMsgs,setErrorMsgs] = useState({});
 
     const dispatch = useDispatch();
+    let history = useHistory();
 
     const onSubmit = (event) => {        
         event.preventDefault();
@@ -32,7 +33,7 @@ function Form(props) {
                 password: password,
                 passwordConfirm: passwordConfirm
             }
-            let [errors,isValid] = validator(userInfo,props.type);
+            let [errors,isValid] = userInfoValidator(userInfo,props.type);
             setErrorMsgs(errors);
 
             if(isValid) {
@@ -57,17 +58,17 @@ function Form(props) {
                 email: email,
                 password: password
             }
-            let [errors,isValid] = validator(userInfo,props.type);
+            let [errors,isValid] = userInfoValidator(userInfo,props.type);
             setErrorMsgs(errors);
 
             if(isValid) {
                 login(userInfo)
                     .then(user => {
-                        history.push("/Projects");
                         dispatch(setUser({
                             name: user.data.name,
                             email: user.data.email
                         }));
+                        history.push("/Projects");                        
                     })
                     .catch(err => {
                         let errorMsg = {

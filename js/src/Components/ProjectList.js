@@ -1,85 +1,172 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import { Plus, Trash } from 'react-bootstrap-icons';
 
 import Table from '../Lib/Table/Components/Table';
 import SearchBar from '../Lib/SearchBar/Components/SearchBar';
 import PopUpModal from '../Modals/PopUpModal/PopUpModal';
-import { 
-    CreateNewProject,
-    DeleteProjects 
-} from './PopUpBody';
-import { setShowPopUp } from './../Slices/PopUpSlice';
-import { NoRowsOverlay } from './TableOverlays';
+import { CreateNew, ConfirmPopup } from './PopUpBody';
+import { setDisplayCheck, setProjectsSelected } from '../Slices/ProjectSlice';
+import { NoRowsOverlay, ProjectCellRenderer } from './TableOverlays';
 import { filterByName } from './../Utils/FilterSearch';
 import { getColumns } from './../Utils/GetColumns';
+import LoadingModal from '../Modals/LoadingModal/LoadingModal';
+import { setFileDetails } from '../Slices/FilesSlice';
+import { getProjectsList, createNew, deleteExisting } from './../Utils/ApiService';
+import MessageModal from '../Modals/MessageModal/MessageModal';
 import './../css/ProjectLists.scss';
 
-let rows = [
-    {
-        projectName: 'Project 1',
-        lastModified: '1',
-        dateCreated: '02/11/20'
-    },
-    {
-        projectName: 'a 2',
-        lastModified: '1',
-        dateCreated: '02/11/20'
-    }
-]
-
-export default function Lists(props) {
+export default function Lists() {
 
     let customComponents = {
-        noRowsOverlay: NoRowsOverlay
+        noRowsOverlay: NoRowsOverlay,
+        rowCellRenderer: ProjectCellRenderer
     }
 
     let type = useSelector(state => state.projectListType.type);
     let currentUser = useSelector(state => state.user.currentUser);
-    let showPopUp = useSelector(state => state.showPopUp.showPopUp);
+    let selectedProjects = useSelector(state => state.projectPage.projectsSelected);
+
+    let trashButton = useRef(null);
 
     let dispatch = useDispatch();
 
     let [columnDefs,setColumnDefs] = useState([]);
     let [rowsData,setRowsData] = useState([]);
+    let [originalRowsData,setOriginalRowsData] = useState([]);
     let [popUpProperties,setPopUpProperties] = useState({});
+    let [isLoading,setIsLoading] = useState(true);
+    let [showMessage, setShowMessage] = useState(false);
+    let [msg,setMsg] = useState('');
+    let [showPopup,setShowPopup] = useState(false);
 
     const getSearchText = (text) => {
-        let filteredRows = filterByName(rows,'projectName',text);
+        let filteredRows = filterByName(originalRowsData,'projectName',text);
         setRowsData(filteredRows);
     }
 
+    const closeMessageModal = () => {
+        setShowMessage(false);
+    }
+
+    const closePopupModal = () => {
+        setShowPopup(false);
+    }
+
+    const saveNewProject = (projectName) => {
+
+        let newProjectInfo = {
+            projectName,
+            email: currentUser.email
+        }
+
+        createNew(newProjectInfo,'projects')
+            .then(project => {
+                let newProject = {
+                    projectName: project.data.projectName,
+                    lastModified: project.data.lastModified,
+                    dateCreated: project.data.dateCreated
+                }
+                let newRowsData = [...rowsData];
+                newRowsData.unshift(newProject);
+                setRowsData(newRowsData);
+                setShowPopup(false);
+            })
+            .catch(err => {
+                console.log(err);
+                setShowMessage(true);
+                if(err.response) {
+                    setMsg(err.response.data.errMsg);
+                }else {
+                    setMsg(err.message);
+                }          
+            })
+    }
+
     const createNewproject = () => {
-        dispatch(setShowPopUp(true));
+        setShowPopup(true);
         setPopUpProperties({
-            body: <CreateNewProject />,
+            body: <CreateNew
+                        saveNew={saveNewProject}
+                        type={'projects'}
+                        closeModal={() => closePopupModal()}
+                  />,
             heading: 'Create new project'
         });
     }
 
-    const deleteProjectsConfirm = () => {
-        dispatch(setShowPopUp(true));
-        setPopUpProperties({
-            body: <DeleteProjects />,
-            heading: 'Delete project(s)'
-        });
+    const deleteSelectedProjects = () => {
+        let projects = {
+            email: currentUser.email,
+            selectedProjects
+        }
+        deleteExisting(projects,'projects')
+            .then(msg => {
+                console.log(msg.data.msg);
+                let updatedList = [...rowsData];
+                for(let i = updatedList.length-1;i >= 0;i--) {
+                    for(let j = 0; j < selectedProjects.length;j++) {
+                        if(updatedList[i].projectName === selectedProjects[j]) {
+                            updatedList.splice(i,1);
+                        }
+                    }                    
+                }
+                setRowsData(updatedList);                
+                setShowPopup(false);
+                dispatch(setProjectsSelected({reset: true}));
+            })
+            .catch(err => {
+                setShowPopup(false);
+                setShowMessage(true);
+                if(err.response) {
+                    setMsg(err.response.data.errMsg);
+                }else {
+                    setMsg(err.message);
+                } 
+            })
     }
 
-    const openProjectPage = (params) => {
-        console.log(params);
-    }
+    const deleteProjectsConfirm = () => {
+        if(selectedProjects.length) {
+            setShowPopup(true);
+            setPopUpProperties({
+                body: <ConfirmPopup 
+                            approveAction={() => deleteSelectedProjects()}
+                            closeModal={() => closePopupModal()}
+                            text={'Are you sure you want to delete the selected project(s)?'}
+                    />,
+                heading: 'Delete project(s)'
+            });
+        }        
+    }    
+
+    useLayoutEffect(() => {
+        if(selectedProjects.length) {
+            trashButton.current.classList = ['project-action-icons'];
+        }else {
+            trashButton.current.classList = ['project-action-icons-disabled'];
+        }
+    },[selectedProjects]);
 
     useEffect(() => {
-        axios.post(`/api/projects/${type}`,{email: currentUser.email})
+        dispatch(setDisplayCheck(false));
+        dispatch(setFileDetails({}));
+        getProjectsList(type,currentUser)        
             .then(projects => {
                 let columns = getColumns(type);
                 let rows = projects.data;
                 setColumnDefs(columns);                
                 setRowsData(rows);
+                setOriginalRowsData(rows);
+                setIsLoading(false);
             })
             .catch(err => {
-                console.log(err);
+                setShowMessage(true);
+                setMsg(err.message);
+                setIsLoading(false);
+                let columns = getColumns(type);
+                setColumnDefs(columns);
+                setRowsData([]);
             })
     },[type]);    
 
@@ -92,28 +179,51 @@ export default function Lists(props) {
                     />
                 </div>                
             </div>
-            <div className={'action-panel'}>
-                <div className={'action-buttons'}>
-                    <Plus className={'project-action-icons'} size={30} onClick={() => {createNewproject()}}/>
-                    <Trash className={'project-action-icons'} size={25} onClick={() => {deleteProjectsConfirm()}}/>
-                </div>                
+            <div className={'action-container'}>
+                <div className={'action-panel'}>
+                    <div className={'action-buttons'}>
+                        <Plus 
+                            className={'project-action-icons'} 
+                            size={30} 
+                            onClick={() => {createNewproject()}}
+                        />
+
+                        <Trash 
+                            ref={trashButton} 
+                            className={'project-action-icons-disabled'}
+                            size={25}  
+                            onClick={() => {deleteProjectsConfirm()}}
+                        />
+                    </div>             
+                </div>   
             </div>
             <div className={'list-panel'}>
-                <div className={'table-container'}>                    
-                    <Table
-                        columnDefs={columnDefs}
-                        rowsData={rowsData}
-                        actionRows={true}
-                        actionRowsHandler={openProjectPage}
-                        customComponents={customComponents}
-                    />
-                </div>                
+                {
+                    isLoading ?
+                    <LoadingModal />
+                    :
+                    <div className={'table-container'}>                    
+                        <Table
+                            columnDefs={columnDefs}
+                            rowsData={rowsData}
+                            actionRows={true}
+                            customComponents={customComponents}
+                        />
+                    </div>
+                }              
             </div>
 
             {
-                showPopUp && <PopUpModal 
+                showPopup &&<PopUpModal 
                     heading={popUpProperties.heading}
                     body={popUpProperties.body}
+                    closeModal={closePopupModal}
+                />
+            }
+            {
+                showMessage && <MessageModal 
+                    closeMessageModal={() => {closeMessageModal()}}
+                    msg={msg}
                 />
             }
         </div>

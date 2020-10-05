@@ -1,3 +1,31 @@
+const setColumnProperties = (column, currentLevel, numChildren, parentColumn) => {
+    let properties = {};
+
+    //Colspan.
+    properties['colSpan'] = numChildren;
+
+    //Aligment.
+    if(column.alignment) {
+        properties['alignment'] = column.alignment;
+    }else if(parentColumn.alignment) {
+        properties['alignment'] = parentColumn.alignment;
+    }else {
+        properties['alignment'] = 'center';
+    }
+
+    //Width.
+    if(currentLevel > 0) {
+        properties['width'] = 'auto';        
+    }else {
+        properties['width'] = column.width;
+    }
+
+    //Custom Component.
+
+
+    return properties;
+}
+
 const handleHierarchy = (tableHeadersList,columnDefs,level,maxLevel,headersList,parentColumn) => {
     if(!tableHeadersList[level]) {
         tableHeadersList[level] = [];
@@ -21,6 +49,14 @@ const handleHierarchy = (tableHeadersList,columnDefs,level,maxLevel,headersList,
                 field: column.field
             }
             headerInfo['alignment'] = columnObj.properties.alignment;
+            headerInfo['width'] = columnObj.properties.width;
+            let cellRenderer = '';
+            if(column.customComponents && column.customComponents.rowCellRenderer) {
+                cellRenderer = column.customComponents.rowCellRenderer;
+            }else if(parentColumn.customComponents && parentColumn.customComponents.rowCellRenderer) {
+                cellRenderer = parentColumn.customComponents.rowCellRenderer;
+            }
+            headerInfo['cellRenderer'] = cellRenderer;
 
             headersList.push(headerInfo);
             let nextLevel = level + 1;
@@ -45,31 +81,6 @@ const getHeaderDepth = (columnDefs,level,maxLevel) => {
     });
 
     return maxLevel;
-}
-
-const setColumnProperties = (column, currentLevel, numChildren, parentColumn) => {
-    let properties = {};
-
-    //Colspan.
-    properties['colSpan'] = numChildren;
-
-    //Aligment.
-    if(column.alignment) {
-        properties['alignment'] = column.alignment;
-    }else if(parentColumn.alignment) {
-        properties['alignment'] = parentColumn.alignment;
-    }else {
-        properties['alignment'] = 'center';
-    }
-
-    //Width.
-    if(currentLevel > 0) {
-        properties['width'] = 'auto';        
-    }else {
-        properties['width'] = column.width;
-    }
-
-    return properties;
 }
 
 export function setColumns(columnDefs) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -30,7 +30,7 @@ function NavBar() {
     return (
         <div className={'nav-bar'}>   
             <div className={'logo-container'}>
-                <img src={logo}></img>
+                <img alt={'logo'} src={logo}></img>
             </div>
             <div className={'nav-panel'}>
                 <div className={'home-nav-container'}>
@@ -78,7 +78,7 @@ function NavBar() {
                                 Login
                             </button>
                         </Link>
-                        <img src={divider} className={'divider-img'}></img>
+                        <img alt={'divider'} src={divider} className={'divider-img'}></img>
                         <Link to='/Register'>
                             <button className={location.pathname==='/Register'?'button-standard-selected':'button-standard'}>
                                 Sign Up

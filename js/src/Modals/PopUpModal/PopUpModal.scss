@@ -16,8 +16,8 @@ $background: rgba(0,0,0,.3);
 
     .popup-panel {
         position: relative;
-        max-width: 468px;
-        min-width: 348px;
+        max-width: 550px;
+        min-width: 500px;
         min-height: 110px;
         display: flex; 
         flex-direction: column;
@@ -37,6 +37,7 @@ $background: rgba(0,0,0,.3);
 
                 .heading-text {
                     font-size: 12px;
+                    font-weight: 600;
                 }
             }
 

@@ -1,8 +1,7 @@
-export const validator = (actualValues,formType) => {
+export const userInfoValidator = (actualValues,formType) => {
     let errorMsgs = {};
     let isValid = true;
     let passwordPattern = /^[a-zA-Z0-9!@#$&()\\-`.+,/\"]*$/g;
-    console.log(actualValues.password.match(passwordPattern));
 
     if(!actualValues.name && formType === 'register') {
         errorMsgs['name'] = 'Name field is required.';
@@ -26,4 +25,14 @@ export const validator = (actualValues,formType) => {
         isValid = false;
     }
     return [errorMsgs,isValid];
+}
+
+export const fileUploadValidator = (fileName) => {
+    let check = false;
+    let fileType = null;
+    if(fileName.match(/.csv/)) {
+        check = true;
+        fileType = 'csv';
+    }
+    return [check,fileType];
 }

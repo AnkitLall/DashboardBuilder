@@ -1,9 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+
 const userRouter = require('./Router/api/Users');
 const projectRouter = require('./Router/api/Projects');
+const fileRouter = require('./Router/api/Files');
 const uri = require('./keys').mongoUri;
+
 const app = express();
 const cors = require('cors');
 const port = 3000;
@@ -21,5 +24,6 @@ mongoose.connect(uri,{
 
 app.use('/api/users',userRouter);
 app.use('/api/projects',projectRouter);
+app.use('/api/files',fileRouter);
 
 app.listen(port,() => console.log(`Server running on port ${port}`));

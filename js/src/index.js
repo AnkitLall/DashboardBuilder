@@ -6,7 +6,7 @@ import App from './App';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { store,persistor } from './Utils/Store';
 import history from './Utils/History';
-import LoadingView from './Components/LoadingView';
+import LoadingView from './Modals/LoadingModal/LoadingModal';
 import './css/index.scss';
 
 ReactDOM.render(

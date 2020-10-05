@@ -1,129 +1,120 @@
-import React, { Component } from 'react';
-import classNames from 'classnames';
+import React, { useState, useEffect } from 'react';
 
 import {
     getTableHeaderInfo
 } from '../util/GetTableInfo';
+import { getCellInfo } from '../util/util';
 import './../css/Table.scss';
 
-export default class Table extends Component {
+export default function Table(props) {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            columnDefs: props.columnDefs,
-            rowsData: props.rowsData,
-            tableHeader: getTableHeaderInfo(props.columnDefs),
-            customComponents: Object.keys(this.props.customComponents)
+    let [columnDefs,setColumnDefs] = useState(props.columnDefs);
+    let [rowsData,setRowsData] = useState([]);
+    let [tableHeader,setTableHeader] = useState(getTableHeaderInfo(props.columnDefs));
+    let [customComponents,setCustomComponents] = useState(props.customComponents);      
+
+    useEffect(() => {        
+        // if(props.rowsData !== rowsData) {
+            setRowsData(props.rowsData);
+        // }
+    },[props.rowsData]);
+
+    useEffect(() => {
+        if(props.columnDefs !== columnDefs) {
+            setColumnDefs(props.columnDefs);
+            setTableHeader(getTableHeaderInfo(props.columnDefs));
         }
-    }
+    },[props.columnDefs]);
 
-    static getDerivedStateFromProps(props, state) {
-        if(props.columnDefs === state.columnDefs && props.rowsData === state.rowsData) {
-            return null;
-        }
+    return(
+        <div className={'lib-table-container'}>
+            <table className={'table'}>
+                <thead classnames={'table-headers'}>
+                    {                            
+                        Object.keys(tableHeader.tableHeadersList).map((tableHeaderList,index) => {
+                            let columnRow = tableHeader.tableHeadersList[tableHeaderList].map((columnObj,idx) => {
 
-        return {
-            columnDefs: props.columnDefs,
-            rowsData: props.rowsData,
-            tableHeader: getTableHeaderInfo(props.columnDefs)
-        }
-    }
-
-    actionRowsHandler(params) {
-        if(!this.props.actionRows) {
-            return;
-        }
-
-        let rowId = params.currentTarget.id;
-        let row = {
-            id: parseInt(rowId),
-            data: this.state.rowsData[rowId],
-            parent: this.state.rowsData
-        };
-        this.props.actionRowsHandler(row)
-    } 
-
-    render() {
-        return(
-            <div className={'lib-table-container'}>
-                <table className={'table'}>
-                    <thead classnames={'table-headers'}>
-                        {                            
-                            Object.keys(this.state.tableHeader.tableHeadersList).map((tableHeaderList,index) => {
-                                let columnRow = this.state.tableHeader.tableHeadersList[tableHeaderList].map((columnObj,idx) => {
-
-                                    let style = {
-                                        width: columnObj.properties.width,
-                                        padding: '20px'
-                                    }
-
-                                    return <th  key={idx} 
-                                                align={columnObj.properties.alignment} 
-                                                style={style}
-                                                colSpan={columnObj.properties.colSpan}
-                                            >
-                                        {columnObj.columnName}
-                                    </th>
-                                });
-                        
-                                return <tr key={index}>{columnRow}</tr>; 
-                            })                            
-                        }                        
-                    </thead>
-                    <tbody classnames={'table-body'}>
-                        {
-                            
-                            this.state.rowsData.map((rowData,index) => {
-                                let classnames = {
-                                    'clickable-row': false,
-                                    'default-row': true
-                                };
-                                if(this.props.actionRows) {
-                                    classnames = {
-                                        'clickable-row': true,
-                                        'default-row': false
-                                    }
+                                let style = {
+                                    width: columnObj.properties.width,
+                                    padding: '6px',
+                                    'fontWeight': '600',
+                                    background: 'gainsboro',
+                                    'fontSize': '15px'
                                 }
+
+                                return <td  key={idx} 
+                                            align={columnObj.properties.alignment} 
+                                            style={style}
+                                            colSpan={columnObj.properties.colSpan}
+                                        >
+                                    {columnObj.columnName}
+                                </td>
+                            });
+                    
+                            return <tr key={index} className={'header-row'}>{columnRow}</tr>; 
+                        })                            
+                    }                        
+                </thead>
+                <tbody classnames={'table-body'}>
+                    {
+                        
+                        rowsData.length ? 
+                        rowsData.map((rowData,index) => {                            
+                            let row = tableHeader.headersList.map((headerInfo,idx) => {
+
+                                let style = {
+                                    padding: '5px',                             
+                                    width: headerInfo.width,
+                                    'fontSize': '12px'
+                                }
+
                                 
-                                let row = this.state.tableHeader.headersList.map((headerInfo,idx) => {
 
-                                    let style = {
-                                        padding: '20px',
-                                    }
+                                return (headerInfo.cellRenderer)?
+                                        <td 
+                                            key={idx}
+                                            style={style}
+                                            align={headerInfo.alignment}
+                                        >
+                                            <customComponents.rowCellRenderer
+                                                key={idx}
+                                                cellInfo={getCellInfo(
+                                                    rowData,
+                                                    headerInfo,
+                                                    rowsData, 
+                                                    index, 
+                                                    idx
+                                                )}
+                                                value={rowData[headerInfo.field]}
+                                            />
+                                        </td>
+                                        :<td key={idx} 
+                                            align={headerInfo.alignment}
+                                            style={style}
+                                        >
+                                                {rowData[headerInfo.field]}
+                                        </td>                                        
+                            });                                                            
 
-                                    return <td key={idx} 
-                                                align={headerInfo.alignment}
-                                                style={style}
-                                            >
-                                                    {rowData[headerInfo.field]}
-                                            </td>
-                                });                                                            
-
-                                return <tr  key={index}
-                                            id={index} 
-                                            onClick={(params) => this.actionRowsHandler(params)} 
-                                            className={classNames(classnames)}>
-                                        {row}
-                                    </tr>                                           
-                            })                                                           
-                        }
-                    </tbody>                                                                                                               
-                </table>    
-                {
-                    !this.state.rowsData.length ?
-                    this.state.customComponents.includes('noRowsOverlay')?
-                    <div className={'no-rows-container'}>
-                        <this.props.customComponents.noRowsOverlay />
-                    </div>   
-                    :
-                    <div className={'no-rows-container'}>
-                        {'No rows present'}
-                    </div>  
-                    :
-                    <div />                
-                }        
-            </div>
-        )
-    }    
+                            return <tr  key={index}
+                                        id={index}                                          
+                                        className={'default-row'}>
+                                    {row}
+                                </tr>                                           
+                        })       
+                        :
+                        
+                        customComponents && customComponents['noRowsOverlay']?
+                        <div className={'no-rows-container'}>
+                            <customComponents.noRowsOverlay />
+                        </div>   
+                        :
+                        <div className={'no-rows-container'}>
+                            {'No rows present'}
+                        </div>                                                      
+                    }
+                </tbody>                                                                                                               
+            </table> 
+        </div>
+    )     
 }

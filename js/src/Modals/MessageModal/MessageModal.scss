@@ -1,0 +1,48 @@
+@import '../PopUpModal/PopUpModal.scss';
+@import '../../css/Button.scss';
+
+.error-panel {
+    position: relative;
+    min-height: 70px;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    max-width: 450px;
+    min-width: 350px;
+
+    .icon-section {
+        min-height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .body-section {
+        min-height: 70px;
+        background: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        .message-container {
+            width: 100%;
+            min-height: 30px;
+        }
+
+        .button-container {
+
+            width: 100%;
+            min-height: 40px;
+            display: flex;
+            justify-content: flex-end;
+
+            .okay-button {
+                @extend .save-button;
+
+                margin-bottom: 5px;
+                margin-right: 10px;
+            }
+        }
+    }
+}

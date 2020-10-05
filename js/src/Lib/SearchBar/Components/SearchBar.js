@@ -6,6 +6,7 @@ import './../css/SearchBar.scss';
 export default function SearchBar(props) {
 
     let [isSearching,setIsSearching] = useState(false);
+    let [placeholderText, setPlaceHolderText] = useState(props.placeholderText?props.placeholderText:'Search');
     let inputTextField = useRef(null);
 
     const resetSearch = () => {
@@ -21,7 +22,8 @@ export default function SearchBar(props) {
                     ref={inputTextField}
                     type={'text'} 
                     className={'text-editor'} 
-                    placeholder={'Search'}
+                    placeholder={placeholderText}
+                    value={props.value}
                     onChange={(e) => {
                         setIsSearching(true);
                         props.getSearchText(e.target.value);
