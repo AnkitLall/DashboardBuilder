@@ -1,0 +1,52 @@
+
+.bar-chart-container {
+
+    .bar-chart {
+        display: flex;
+        flex-direction: column;
+
+        .title {
+            display: flex;
+            margin-top: 20px;
+
+            .title-text {
+                width: 20%;
+            }
+
+            .title-textbox {
+                width: 40%;
+            }
+        }
+
+        .color-block {
+            display: flex;
+            margin-top: 20px;
+
+            .color-text {
+                width: 20%;
+            }
+
+            .color-picker-container {
+                width: 40%;
+
+                .color-info {
+                    display: flex;
+                    align-items: center;
+
+                    .color-picker-box {
+                        width: 15px;
+                        height: 15px;
+                    }          
+                    
+                    .color-name {
+                        margin-left: 20px;
+                    }
+                }   
+
+                .color-picker {
+                    margin-top: 5px;
+                }
+            }
+        }
+    }
+}

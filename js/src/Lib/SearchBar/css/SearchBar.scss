@@ -1,0 +1,27 @@
+
+.lib-search-bar-container {
+    width: 100%;
+
+    .search-bar {
+        display: flex;
+        justify-content: center;
+        border: 1px solid;
+        border-radius: 20px;
+        
+        .text-editor {
+            border: none;
+            width: 88%;
+            outline: none;
+            border-radius: 20px;
+            padding-left: 3px;
+        }
+
+        .search-icon-container {
+            margin-top: 2px;            
+
+            .close-icon {
+                cursor: pointer;
+            }
+        }
+    }
+}

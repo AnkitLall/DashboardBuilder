@@ -1,0 +1,21 @@
+//Project cell renderer
+
+.cell-container {
+    display: flex;
+    align-items: center;
+
+    .checkbox-container {
+        width: 5%;
+    }
+
+    .project-text {
+        width: 95%;        
+    }
+
+    .other-text {
+        @extend .project-text;
+
+        display: flex;
+        justify-content: center;
+    }
+}

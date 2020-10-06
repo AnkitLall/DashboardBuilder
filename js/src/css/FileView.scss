@@ -1,0 +1,31 @@
+$borderColor: #E7EEEC;
+$sectionSelectedColor: #19A0FB;
+
+.file-view-container {
+    width: 80%;
+
+    .file-view-section {
+        width: 100%;
+    }
+
+    .file-view-header-section {
+        display: flex;
+        height: 70px;
+        border-bottom: 1px solid $borderColor;
+        align-items: flex-end;
+
+        .file-view-selectors {
+            margin-right: 5px;
+            margin-left: 15px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            cursor: pointer;
+        }
+
+        .file-view-selectors-selected {
+            @extend .file-view-selectors;
+
+            border-bottom: 3px solid $sectionSelectedColor;
+        }
+    }
+}

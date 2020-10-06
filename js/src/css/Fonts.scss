@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+$standardColor: black;
+
+.font-standard {
+    font: {
+        family: Roboto;
+        size: 15px;        
+    };
+    color: $standardColor;
+}
+
+.font-bold {
+    @extend .font-standard;
+    
+    font-weight: bold;
+}

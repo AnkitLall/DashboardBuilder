@@ -1,0 +1,19 @@
+@import 'Button';
+
+//Create new project popup
+.create-container {
+    width: 100%;
+
+    .text-box-container {
+
+        .text-box {
+            margin: 20px;
+            width: calc(100% - 40px);
+        }
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: flex-end;
+    }
+}

@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
+import Slider from './Slider/Slider';
+import './../css/Home.scss';
 
 class Home extends Component {
     constructor(props) {
@@ -8,10 +12,27 @@ class Home extends Component {
         }
     }
 
-    rrender() {
+    render() {
         return (
-            <div>
-                Home!
+            <div className={'home-container'}>
+                <div className={'home-intro-container'}>
+                    <div className={'home-intro-image'}>
+
+                    </div>
+                    <div className={'home-intro-description'}>
+                        <div className={'description-text'}>
+                            Text
+                        </div>
+                        <div className={'getting-started-container'}>
+                            <Link to='/Projects'>
+                                <button className={'button-colored'}>{'Get Started >'}</button>
+                            </Link>
+                        </div>
+                    </div>                    
+                </div>
+                <div className={'template-display-container'}>
+                    <Slider />
+                </div>
             </div>
         )
     }
